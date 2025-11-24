@@ -4,9 +4,9 @@ CFLAGS = -std=c11
 
 LDFLAGS =
 
-SRCS = main.c
+SRCS = main.c parse.c
 
-HEADERS = 
+HEADERS = main.h parse.h
 
 TARGET = main
 
