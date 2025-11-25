@@ -19,6 +19,6 @@ int err(){
 void readingstuff(){
   int x = open(stdin, O_RDONLY);
   File *f = fopen(stdin);
-  char buffer[30];
-  fgets(buffer, 30, f);
+  char buffer[200];
+  fgets(buffer, 200, f);
 }
