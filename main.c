@@ -11,9 +11,12 @@ int main(){
 	char *home = getenv("HOME");
 	getcwd(cwd, sizeof(cwd));
 	if(strncmp(cwd, home, strlen(home)) == 0){
-    	printf("~%s$\n", cwd + strlen(home));
+    	printf("~%s$ ", cwd + strlen(home));
     } 
     else{
-    	printf("%s$\n", cwd);
+    	printf("%s$ ", cwd);
     }
+    fflush(stdout);
+    char prompt[ARG_MAX];
+    scanf("%s", prompt);
 }
