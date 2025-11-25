@@ -16,7 +16,7 @@ int err(){
   exit(1);
 }
 
-void readingstuff(){
+void readingline(){
   int x = open(stdin, O_RDONLY);
   File *f = fopen(stdin);
   char buffer[200];
