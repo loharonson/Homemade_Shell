@@ -25,5 +25,5 @@ char*** readingline(){
     *returnable = buffer;
     returnable++;
   }
-  return *returnable;
+  return &returnable;
 }
