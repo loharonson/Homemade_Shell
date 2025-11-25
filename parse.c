@@ -1,7 +1,7 @@
 #include <string.h>
 #include <unistd.h>
 
-void parse_args( char * line, char ** arg_ary ){
+int parse_args( char * line, char *** arg_ary ){
   //figure out how many commands are happening
   int j = 1;
   char * curr = line;
@@ -9,15 +9,13 @@ void parse_args( char * line, char ** arg_ary ){
   while((token = strsep(&curr, ";"))){
     j++;
   }
-  int i = 0;
   for(int h = 0; h < j; h++){
-    while((token = strsep(&curr, " "))){
-      if(strstr(token, ";")){
-        //NEEDS TO BE DONE
+    for(int i = 0; token = strsep(&curr, " "); i++){
+      while((token = strsep(&curr, " "))){
+        arg_ary[h][i] = token;
       }
-      arg_ary[i] = token;
-      i++;
     }
-    arg_ary[i] = NULL;
+    arg_ary[h][i] = NULL;
   }
+  return j;
 }
