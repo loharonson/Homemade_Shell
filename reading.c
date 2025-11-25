@@ -16,9 +16,14 @@ int err(){
   exit(1);
 }
 
-void readingline(){
+char*** readingline(){
+  char ** returnable;
   int x = open(stdin, O_RDONLY);
   File *f = fopen(stdin);
   char buffer[200];
-  fgets(buffer, 200, f);
+  while(fgets(buffer, 200, f) != NULL){
+    *returnable = buffer;
+    returnable++;
+  }
+  return *returnable;
 }
