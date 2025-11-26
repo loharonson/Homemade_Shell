@@ -1,5 +1,4 @@
 #ifndef parse_h
   #define parse_h
-  int parse_cmds(char * line, char*** cmd_ary);
-  void parse_args( char * line, char ** arg_ary );
+  int parse_args( char * line, char ** arg_ary, char * delimiter);
 #endif

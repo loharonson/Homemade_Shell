@@ -5,7 +5,7 @@
 
 #define BUFFER_SIZE 128
 
-int parse_cmds(char * line, char*** cmd_ary){
+/*int parse_cmds(char * line, char*** cmd_ary){
   char * curr = line;
   char * token;
   int cmds = 1;
@@ -34,14 +34,18 @@ int parse_cmds(char * line, char*** cmd_ary){
   }
   return cmds;
 }
-
-void parse_args( char * line, char ** arg_ary ){
+*/
+int parse_args( char * line, char ** arg_ary, char * delimiter){
   char * curr = line;
   char * token;
   int i = 0;
-  while((token = strsep(&curr, " "))){
+  while((token = strsep(&curr, delimiter))){
     arg_ary[i] = token;
     i++;
   }
   arg_ary[i] = NULL;
+  if(!strcmp(delimiter, ";")){
+    return ++i;
+  }
+  return 0;
 }

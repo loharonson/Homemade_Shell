@@ -4,9 +4,10 @@
 #include <stdlib.h>
 
 int main(){
-  char *** cmds = malloc(20 * sizeof(char **));
+  char * cmds[20];
   char line[] = "cowsay -f dragon-and-cow roar";
-  int i = parse_cmds(line,cmds);
-  printf("%d\n",i);
-  execvp(cmds[0][0], cmds[0]);
+  int i = parse_args(line,cmds, ";");
+  char * args[20];
+  int j = parse_args(cmds[0], args, " ");
+  execvp(args[0], args);
 }
