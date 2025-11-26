@@ -1,9 +1,12 @@
 #include "main.h"
-#include "unistd.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(){
-  char ** args[20];
+  char *** cmds = malloc(20 * sizeof(char **));
   char line[] = "cowsay -f dragon-and-cow roar";
-  int i = parse_args(line,args);
-  execvp(args[0][0], args[0]);
+  int i = parse_cmds(line,cmds);
+  printf("%d\n",i);
+  execvp(cmds[0][0], cmds[0]);
 }

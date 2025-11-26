@@ -10,4 +10,4 @@ parse.o: parse.c parse.h
 reading.o: reading.c reading.h
 	@gcc -c reading.c
 clean:
-	rm *.o turtling
+	rm -f *.o turtling
