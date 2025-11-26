@@ -12,7 +12,11 @@ int main(){
 	getcwd(cwd, sizeof(cwd));
 	if(strncmp(cwd, home, strlen(home)) == 0){
     	printf("~%s$ ", cwd + strlen(home));
+<<<<<<< Updated upstream
     }
+=======
+    } 
+>>>>>>> Stashed changes
     else{
     	printf("%s$ ", cwd);
     }
@@ -20,6 +24,10 @@ int main(){
     char prompt[ARG_MAX];
     scanf("%s", prompt);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
 =======
     
 >>>>>>> Stashed changes
