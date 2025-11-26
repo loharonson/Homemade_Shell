@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdin.h>
+#include "main.c"
 
 int err(){
   printf("errno %d\n", errno);
