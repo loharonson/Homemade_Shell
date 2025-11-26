@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #define BUFFER_SIZE 128
@@ -7,7 +8,7 @@ int parse_cmds(char * line char*** cmd_ary){
   char * curr = line;
   char * token;
   int cmds = 1;
-  char * prev;
+  char * prev = malloc(BUFFER_SIZE);
   char * cmd_buffer = malloc(BUFFER_SIZE);
   int i = 0;
   while(token = strsep(&curr, ";")){
