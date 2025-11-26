@@ -19,8 +19,4 @@ int main(){
     fflush(stdout);
     char prompt[ARG_MAX];
     scanf("%s", prompt);
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
 }
