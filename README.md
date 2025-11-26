@@ -2,4 +2,9 @@
 # Systems Project2 - MyShell
 Louis Oh-Aronson, Amrit Das, and Solomon Binyaminov
 
-The Loubots
+Oh, Das! (ich) Bin.
+
+prompting (include shell path, and flush)
+parsing (include semicolons)
+forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well
+redirection + pipes
