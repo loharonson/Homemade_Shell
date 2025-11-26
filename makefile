@@ -1,27 +1,13 @@
-CC = gcc
-
-CFLAGS = -std=c11
-
-LDFLAGS =
-
-SRCS = main.c parse.c reading.c
-
-HEADERS = main.h parse.h reading.h
-
-TARGET = main
-
-run: $(TARGET)
-	@./$(TARGET)
-
-compile: $(TARGET)
-
-$(TARGET): $(SRCS:.c=.o)
-	@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-%.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
+.PHONY: clean run compile
+run: turtling
+	@./turtling
+compile turtling: main.o parse.o reading.o
+	@gcc -o turtling main.o parse.o reading.o
+main.o: main.h main.c
+	@gcc -c main.c
+parse.o: parse.c parse.h
+	@gcc -c parse.c
+reading.o: reading.c reading.h
+	@gcc -c reading.c
 clean:
-	@rm -f *.o $(TARGET)
-
-.PHONY: compile run clean
+	rm -f *.o turtling
