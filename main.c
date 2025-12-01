@@ -1,4 +1,5 @@
 #include "main.h"
+#include "operations.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,11 +18,11 @@ int err(){
 }
 
 int main(){
-	char cwd[PATH_MAX];
-	char *home = getenv("HOME");
-	getcwd(cwd, sizeof(cwd));
-	if(strncmp(cwd, home, strlen(home)) == 0){
-    	printf("~%s$ ", cwd + strlen(home));
+  char cwd[PATH_MAX];
+  char *home = getenv("HOME");
+  getcwd(cwd, sizeof(cwd));
+  if(strncmp(cwd, home, strlen(home)) == 0){
+    printf("~%s$ ", cwd + strlen(home));
   }
   else{
   	printf("%s$ ", cwd);
@@ -29,13 +30,6 @@ int main(){
   fflush(stdout);
   char prompt[ARG_MAX];
   scanf("%s", prompt);
-  else{
-    printf("%s$ ", cwd);
-  }
-  fflush(stdout);
-  char prompt[ARG_MAX];
-  scanf("%s", prompt);
-
   //read, then parse, then execvp
   char * line = readingline();
   char * cmds[20];
