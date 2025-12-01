@@ -24,3 +24,12 @@ void redirect_stdout_overwrite(char ** args){
   char * before_after[2] = redirect_general(args);
 
 }
+
+void redirect_in(){
+  int x = open("inputs.txt", O_RDONLY);
+  int stdin = STDIN_FILENO;
+  int backup_inputs = dup(x);
+  dup2(x,stdin);
+  printf("Testing the redirect_in DELETE WHEN WORKING");
+
+}
