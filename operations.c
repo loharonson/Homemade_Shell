@@ -77,3 +77,33 @@ void redirect_stdout_append(char ** args){
     dup2(backup_stdout, stdout);
   }
 }
+
+void redirect_in(){
+  int x = open("inputs.txt", O_RDONLY);
+  int stdin = STDIN_FILENO;
+  int backup_inputs = dup(x);
+  dup2(stdin, x);
+  printf("Testing the redirect_in DELETE WHEN WORKING");
+}
+
+char* currents(){
+  char currentdir[100];
+  getcwd(&currentdir, sizeof(currentdir));
+  printf("Current Directory: %s\n", currentdir);
+  char *str = (char*) malloc(sizeof(currentdir));
+  if(str == NULL){
+    return NULL;
+  }
+  strcpy(str, currentdir);
+  return str;
+}
+
+void changing_dirs(char * desires){
+  currents();
+  int x = chdir(desires);
+  if(x == -1){
+    err();
+  }
+  printf("Successfully changed the directory");
+  currents();
+}
