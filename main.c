@@ -51,26 +51,25 @@ int main(){
   int cmds_amt = parse_args(line, cmds, ";");
   for(int i = 0; i < cmds_amt; i++){
     char * args[20];
-    //check for special symbols
-    if(strchr(cmds[i], '|')){
-      //PIPE_FUNCTION()
-    }
-    if(strchr(cmds[i],'<')){
-      //REDIRECT_STDIN_FUNC()
-    }
-    if(strchr(cmds[i], '>')){
-      if(strstr(cdms[i], ">>")){
-        //REDIRECT_STDOUT_APPEND()
-      }
-      else{
-        //REDIReCT_STDOUT_OVERWRITE()
-      }
-    }
     int j = parse_args(cmds[i], args, " ");
     int p = fork();
     if(p == -1)err();
     if(p == 0){
-      execvp(args[0], args);
+      //check for special symbols
+      if(strchr(cmds[i], '|')){
+        pipe(args);
+      }
+      if(strchr(cmds[i],'<')){
+        redirect_stdin(args);
+      }
+      if(strchr(cmds[i], '>')){
+        if(strstr(cdms[i], ">>")){
+          redirect_stdout_append(args);
+        }
+        else{
+          redirect_stdout_overwrite(args);
+        }
+      }
       exit(0);
     }
     int status;
