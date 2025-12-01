@@ -29,7 +29,23 @@ void redirect_in(){
   int x = open("inputs.txt", O_RDONLY);
   int stdin = STDIN_FILENO;
   int backup_inputs = dup(x);
-  dup2(x,stdin);
+  dup2(stdin, x);
   printf("Testing the redirect_in DELETE WHEN WORKING");
+}
 
+char [] currents(){
+  char currentdir[100];
+  getcwd(&currentdir, sizeof(currentdir));
+  printf("Current Directory: %s\n", currentdir);
+  return currentdir;
+}
+
+void changing_dirs(char * desires){
+  currents();
+  int x = chdir(desires);
+  if(x == -1){
+    err();
+  }
+  printf("Successfully changed the directory");
+  currents();
 }
