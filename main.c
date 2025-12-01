@@ -1,4 +1,5 @@
 #include "main.h"
+#include "operations.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
