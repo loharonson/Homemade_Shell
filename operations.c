@@ -34,7 +34,30 @@ void redirect_stdout_overwrite(char ** args){
   int stdout = STDOUT_FILENO;
   int backup_stdout = dup(stdout);
   if(p == -1)err();
-  int file = open(before_after[0], O_WRONLY);
+  int file = open(before_after[0], O_WRONLY | O_CREAT, 0644);
+  if(file == -1)err();
+  dup2(file, stdout);
+  int p = fork();
+  if(p == 0){
+    char ** new_args = {before, after, NULL};
+    execvp(new_args[0], new_args);
+  }
+  int status;
+  pid_t exit_child = wait(&status);
+  if(exit_child < 0)err();
+  if(WIFEXITED(status)){
+    //reset stdout just in case
+    fflush(stdout);
+    dup2(backup_stdout, stdout);
+  }
+}
+
+void redirect_stdout_append(char ** args){
+  char * before_after[3] = redirect_general(args);
+  int stdout = STDOUT_FILENO;
+  int backup_stdout = dup(stdout);
+  if(p == -1)err();
+  int file = open(before_after[0], O_WRONLY | O_APPEND | O_CREAT, 0644);
   if(file == -1)err();
   dup2(file, stdout);
   int p = fork();
