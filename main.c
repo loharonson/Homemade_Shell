@@ -49,20 +49,27 @@ int main(){
     int p = fork();
     if(p == -1)err();
     if(p == 0){
+      int specials = 0;
       //check for special symbols
-      if(strchr(cmds[i], '|')){
-        pipe(args);
-      }
-      if(strchr(cmds[i],'<')){
-        redirect_stdin(args);
-      }
       if(strchr(cmds[i], '>')){
-        if(strstr(cdms[i], ">>")){
+        specials++;
+        if(strstr(cmds[i], ">>")){
           redirect_stdout_append(args);
         }
         else{
           redirect_stdout_overwrite(args);
         }
+      }
+      if(strchr(cmds[i], '|')){
+        specials++;
+        pipe(args);
+      }
+      if(strchr(cmds[i],'<')){
+        specials++;
+        redirect_stdin(args);
+      }
+      if(!specials){
+        execvp(args[0], args);
       }
       exit(0);
     }
