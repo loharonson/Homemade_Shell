@@ -14,6 +14,7 @@ int main(){
 	if(strncmp(cwd, home, strlen(home)) == 0){
     	printf("~%s$ ", cwd + strlen(home));
     }
+<<<<<<< HEAD
   else{
   	printf("%s$ ", cwd);
   }
@@ -26,4 +27,12 @@ int main(){
   char * args[20];
   int j = parse_args(cmds[0], args, " ");
   execvp(args[0], args);
+=======
+    else{
+    	printf("%s$ ", cwd);
+    }
+    fflush(stdout);
+    char prompt[ARG_MAX];
+    scanf("%s", prompt);
+>>>>>>> amrit
 }
