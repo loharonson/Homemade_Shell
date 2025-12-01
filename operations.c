@@ -33,11 +33,16 @@ void redirect_in(){
   printf("Testing the redirect_in DELETE WHEN WORKING");
 }
 
-char [] currents(){
+char* currents(){
   char currentdir[100];
   getcwd(&currentdir, sizeof(currentdir));
   printf("Current Directory: %s\n", currentdir);
-  return currentdir;
+  char *str = (char*) malloc(sizeof(currentdir));
+  if(str == NULL){
+    return NULL;
+  }
+  strcpy(str, currentdir);
+  return str;
 }
 
 void changing_dirs(char * desires){
