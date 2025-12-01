@@ -17,14 +17,14 @@ int err(){
   exit(1);
 }
 
-char*** readingline(){
-  char ** returnable;
+char* readingline(){
+  char * returnable;
   //int x = open(stdin, O_RDONLY);
   File *f = fopen(stdin);
   char buffer[200];
   while(fgets(buffer, 200, f) != NULL){
-    *returnable = buffer;
+    returnable = buffer;
     returnable++;
   }
-  return &returnable;
+  return returnable;
 }

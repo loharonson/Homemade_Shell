@@ -7,6 +7,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+int err(){
+  printf("errno %d\n", errno);
+  printf("%s\n", strerror(errno));
+  exit(1);
+}
+
 int main(){
 	char cwd[PATH_MAX];
 	char *home = getenv("HOME");
@@ -32,4 +38,23 @@ int main(){
   fflush(stdout);
   char prompt[ARG_MAX];
   scanf("%s", prompt);
+
+  //read, then parse, then execvp
+  char * line = readingline();
+  char * cmds[20];
+  int cmds_amt = parse_args(line, cmds, ";");
+  for(int i = 0; i < cmds_amt; i++){
+    char * args[20];
+    int j = parse_args(cmds[i], args, " ");
+    int p = fork();
+    if(p == -1)err();
+    if(p == 0){
+      execvp(args[0], args);
+      exit(0);
+    }
+    int status;
+    pid_t exit_child = wait(&status);
+    if(exit_child == -1)err();
+    if(WIFEXITED(status))continue;
+  }
 }
