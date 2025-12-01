@@ -7,6 +7,8 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <errno.h>
+
 
 int err(){
   printf("errno %d\n", errno);
@@ -27,12 +29,6 @@ int main(){
   fflush(stdout);
   char prompt[ARG_MAX];
   scanf("%s", prompt);
-  char * cmds[20];
-  char line[] = "cowsay -f dragon-and-cow roar";
-  int i = parse_args(line,cmds, ";");
-  char * args[20];
-  int j = parse_args(cmds[0], args, " ");
-  execvp(args[0], args);
   else{
     printf("%s$ ", cwd);
   }
@@ -63,7 +59,7 @@ int main(){
       }
       if(strchr(cmds[i], '|')){
         specials++;
-        pipe(args);
+        pipe_func(args);
       }
       if(strchr(cmds[i],'<')){
         specials++;

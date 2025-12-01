@@ -1,5 +1,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 
 #define BUFFER_SIZE 128
