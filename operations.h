@@ -7,4 +7,5 @@
   void redirect_in();
   char* currents();
   void changing_dirs(char * desires);
+  void pipe_func(char ** args);
 #endif
