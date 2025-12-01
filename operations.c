@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 
 #define BUFFER_SIZE 128
@@ -41,5 +42,12 @@ void redirect_stdout_overwrite(char ** args){
     char ** new_args = {before, after, NULL};
     execvp(new_args[0], new_args);
   }
-  
+  int status;
+  pid_t exit_child = wait(&status);
+  if(exit_child < 0)err();
+  if(WIFEXITED(status)){
+    //reset stdout just in case
+    fflush(stdout);
+    dup2(backup_stdout, stdout);
+  }
 }
