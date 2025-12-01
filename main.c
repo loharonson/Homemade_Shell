@@ -46,6 +46,10 @@ int main(){
     int p = fork();
     if(p == -1)err();
     if(p == 0){
+      if(!strcmp(args[0], "cd")){
+        changing_dirs(args[1]);
+        exit(0);
+      }
       int specials = 0;
       //check for special symbols
       if(strchr(cmds[i], '>')){
