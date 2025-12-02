@@ -32,7 +32,7 @@ char ** redirect_general(char ** args){
   return out;
 }
 
-char ** redirect_stdout_overwrite(char ** args){
+char ** redirect_stdout_overwrite(char ** args, int len){
   char * before_after[3];
   before_after = redirect_general(args);
   int stdout = STDOUT_FILENO;
@@ -54,7 +54,7 @@ char ** redirect_stdout_overwrite(char ** args){
     fflush(stdout);
     dup2(backup_stdout, stdout);
   }
-
+  char ** new_args[len - ]
 }
 
 char ** redirect_stdout_append(char ** args){
@@ -102,14 +102,14 @@ char* currents(){
   return str;
 }
 
-void changing_dirs(char * desires){
+char * changing_dirs(char * desires){
   currents();
   int x = chdir(desires);
   if(x == -1){
-    err();
+    printf("%s\n", strerror(errno));
   }
   printf("Successfully changed the directory");
-  currents();
+  return currents();
 }
 
 void pipe_func(char **args){
