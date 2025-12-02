@@ -107,3 +107,7 @@ void changing_dirs(char * desires){
   printf("Successfully changed the directory");
   currents();
 }
+
+void pipe_func(char **args){
+
+}
