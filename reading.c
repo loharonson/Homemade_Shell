@@ -8,7 +8,6 @@
 #include <time.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include <stdin.h>
 #include "main.c"
 
 int err(){
