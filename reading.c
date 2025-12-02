@@ -20,9 +20,9 @@ int err(){
 char* readingline(){
   char * returnable;
   //int x = open(stdin, O_RDONLY);
-  File *f = fopen(stdin);
+  //File *f = fopen(stdin);
   char buffer[200];
-  while(fgets(buffer, 200, f) != NULL){
+  while(fgets(buffer, 200, stdin) != NULL){
     returnable = buffer;
     returnable++;
   }
