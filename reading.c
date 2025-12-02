@@ -22,8 +22,7 @@ char* readingline(){
   char buffer[200];
   int i = 0;
   while(fgets(buffer, 200, stdin)){
-    returnable = buffer;
-    returnable++;
+    strcpy(returnable, buffer);
     i++;
   }
   if(i == 0){
