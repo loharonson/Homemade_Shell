@@ -8,13 +8,14 @@
 #include <time.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "main.c"
-
+#include "main.h"
+/*
 int err(){
-  printf("errno %d\n", errno);
-  printf("%s\n", strerror(errno));
-  exit(1);
+    printf("errno %d\n",errno);
+    printf("%s\n",strerror(errno));
+    exit(1);
 }
+*/
 
 char* readingline(){
   char * returnable;
