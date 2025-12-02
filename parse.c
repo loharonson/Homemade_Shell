@@ -14,8 +14,5 @@ int parse_args( char * line, char ** arg_ary, char * delimiter){
     i++;
   }
   arg_ary[i] = NULL;
-  if(!strcmp(delimiter, ";")){
-    return ++i;
-  }
-  return 0;
+  return ++i;
 }
