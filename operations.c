@@ -78,7 +78,7 @@ void redirect_stdout_append(char ** args){
   }
 }
 
-void redirect_in(){
+void redirect_stdin(){
   int x = open("inputs.txt", O_RDONLY);
   int stdin = STDIN_FILENO;
   int backup_inputs = dup(x);
