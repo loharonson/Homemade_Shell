@@ -8,20 +8,21 @@
 #include <time.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "main.c"
-
+#include "main.h"
+/*
 int err(){
-  printf("errno %d\n", errno);
-  printf("%s\n", strerror(errno));
-  exit(1);
+    printf("errno %d\n",errno);
+    printf("%s\n",strerror(errno));
+    exit(1);
 }
+*/
 
 char* readingline(){
   char * returnable;
   //int x = open(stdin, O_RDONLY);
-  File *f = fopen(stdin);
+  //File *f = fopen(stdin);
   char buffer[200];
-  while(fgets(buffer, 200, f) != NULL){
+  while(fgets(buffer, 200, stdin) != NULL){
     returnable = buffer;
     returnable++;
   }
