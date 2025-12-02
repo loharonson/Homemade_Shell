@@ -83,7 +83,7 @@ char ** redirect_stdout_append(char ** args){
 }
 
 void redirect_stdin(){
-  int x = open("inputs.txt", O_RDONLY);
+  int x = open("lines.txt", O_RDONLY);
   int stdin = STDIN_FILENO;
   int backup_inputs = dup(x);
   dup2(stdin, x);
