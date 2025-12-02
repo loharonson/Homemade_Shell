@@ -32,8 +32,9 @@ char ** redirect_general(char ** args){
   return out;
 }
 
-void redirect_stdout_overwrite(char ** args){
-  char * before_after[3] = redirect_general(args);
+char ** redirect_stdout_overwrite(char ** args){
+  char * before_after[3];
+  before_after = redirect_general(args);
   int stdout = STDOUT_FILENO;
   int backup_stdout = dup(stdout);
   if(p == -1)err();
@@ -53,10 +54,12 @@ void redirect_stdout_overwrite(char ** args){
     fflush(stdout);
     dup2(backup_stdout, stdout);
   }
+
 }
 
-void redirect_stdout_append(char ** args){
-  char * before_after[3] = redirect_general(args);
+char ** redirect_stdout_append(char ** args){
+  char * before_after[3];
+  before_after = redirect_general(args);
   int stdout = STDOUT_FILENO;
   int backup_stdout = dup(stdout);
   if(p == -1)err();
@@ -76,9 +79,10 @@ void redirect_stdout_append(char ** args){
     fflush(stdout);
     dup2(backup_stdout, stdout);
   }
+
 }
 
-void redirect_in(){
+void redirect_stdin(){
   int x = open("inputs.txt", O_RDONLY);
   int stdin = STDIN_FILENO;
   int backup_inputs = dup(x);
