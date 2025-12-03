@@ -81,7 +81,8 @@ void redirect_stdin(){
 /*currents()
   Arguments: None. Return: char*(string)
   This function uses the getcwd() command and puts it to a buffered string called currentdir.
-  The returned char* string is called currentdir.*/
+  The returned char* string is called currentdir.
+*/
 
 char* currents(){
   char currentdir[100];
@@ -99,7 +100,8 @@ char* currents(){
   Arguments: char * desires -- this is the char* that is the desired directory we want to move to. like "cd ____"
   Output: string that shows the current directory
   Working: uses chdir to change the directory to the desired directory, checks for errors, and then uses
-  currents() in order to print the current directoryy*/
+  currents() in order to print the current directory
+*/
 char * changing_dirs(char * desires){
   currents();
   int x = chdir(desires);
@@ -111,5 +113,4 @@ char * changing_dirs(char * desires){
 }
 
 void pipe_func(char **args){
-
 }
