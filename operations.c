@@ -86,9 +86,9 @@ char* currents(){
   Working: uses chdir to change the directory to the desired directory, checks for errors, and then uses
   currents() in order to print the current directory
 */
-char * changing_dirs(char * desires){
+char * changing_dirs(char ** desires){
   currents();
-  int x = chdir(desires);
+  int x = chdir(*desires);
   if(x == -1){
     printf("%s\n", strerror(errno));
   }
