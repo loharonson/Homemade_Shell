@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pwd.h>
-#include <linux/limits.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <stdlib.h>
@@ -56,10 +55,10 @@ int main(int argc, char * argv[]){
         if(strchr(cmds[i], '>')){
           specials++;
           if(strstr(cmds[i], ">>")){
-            args = redirect_stdout(args, 0, j);
+            redirect_stdout(args, 0, j);
           }
           else{
-            args = redirect_stdout(args, 1, j);
+            redirect_stdout(args, 1, j);
           }
         }
         if(strchr(cmds[i], '|')){

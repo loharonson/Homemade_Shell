@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <string.h>
 
 #define BUFFER_SIZE 128
 
@@ -31,35 +32,19 @@ void redirect_stdout(char ** args, int is_append, int len){
   if(i == len - 1){
     int stdout = STDOUT_FILENO;
     int backup_stdout = dup(stdout);
+    int file;
     if(is_append){
-      int file = open(destinaion, O_WRONLY | O_CREAT | O_APPEND, 0644);
+      file = open(destination, O_WRONLY | O_CREAT | O_APPEND, 0644);
     }
     else{
-      int file = open(destinaion, O_WRONLY | O_CREAT, 0644);
+      file = open(destination, O_WRONLY | O_CREAT, 0644);
     }
     if(file == -1){
       printf("%s\n", strerror(errno));
     }
     dup2(file, stdout);
-    int p = fork();
-    if(p == -1){
-      printf("%s\n", strerror(errno));
+    execvp(before_args[0], before_args);
     }
-    if(p == 0){
-      execvp(before_args[0], before_args);
-    }
-    int status;
-    pid_t exit_child = wait(&status);
-    if(exit_child == -1){
-      printf("%s\n", strerror(errno));
-    }
-    if(WIFEXITED(status)){
-      //reset stdout just in case
-      fllush(stdout);
-      dup2(backup_stdout, stdout);
-      exit(0);
-    }
-  }
 
 }
 
