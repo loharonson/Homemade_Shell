@@ -50,7 +50,8 @@ void redirect_stdout(char ** args, int is_append, int len){
 
 /*redirect_stdin()
   Arguments: None. Return: None.
-  This function redirects stdin from a file, titled "lines.txt"*/
+  This function redirects stdin from a file, titled "lines.txt"
+  */
 void redirect_stdin(){
   int x = open("lines.txt", O_RDONLY);
   if(x <0){
