@@ -87,9 +87,12 @@ char ** redirect_stdout_append(char ** args){
   This function redirects stdin from a file, titled "lines.txt"*/
 void redirect_stdin(){
   int x = open("lines.txt", O_RDONLY);
+  if(x <0){
+    err();
+  }
   int stdin = STDIN_FILENO;
-  int backup_inputs = dup(x);
-  dup2(stdin, x);
+  dup2(x, stdin);
+  close(x);
   printf("Testing the redirect_in DELETE WHEN WORKING");
 }
 
@@ -100,9 +103,9 @@ void redirect_stdin(){
 
 char* currents(){
   char currentdir[100];
-  getcwd(&currentdir, sizeof(currentdir));
+  getcwd(currentdir, sizeof(currentdir));
   printf("Current Directory: %s\n", currentdir);
-  char *str = (char*) malloc(sizeof(currentdir));
+  char *str = (char*) malloc(101);
   if(str == NULL){
     return NULL;
   }
