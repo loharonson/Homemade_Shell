@@ -13,23 +13,22 @@ int err(){
   exit(1);
 }
 
-char ** redirect_general(char ** args){
-  char * out[3];
-  out[0] = malloc(BUFFER_SIZE);
-  int found_redirect = 0;
+void redirect_stdout(char ** args, int is_append, int len){
+  char * before_args[len];
   int i = 0;
-  while(!found_redirect){
+  char * destination = malloc(BUFFER_SIZE);
+  //loop up to the redirector
+  while(i < len){
     if(strchr(args[i], '>')){
-      found_redirect = 1;
-      out[1] = args[i + 1];
-      out[2] = (char)i;
+      strcpy(destination, args[i + 1]);
+      break;
     }
-    else{
-      strcpy(out[0], args[i]);
-      i++;
-    }
+    before_args[i] = args[i];
+    i++;
+  if(i == len - 1){
+    
+    exit(0);
   }
-  return out;
 }
 
 char ** redirect_stdout_overwrite(char ** args, int len){

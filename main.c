@@ -56,10 +56,10 @@ int main(int argc, char * argv[]){
         if(strchr(cmds[i], '>')){
           specials++;
           if(strstr(cmds[i], ">>")){
-            args = redirect_stdout_append(args);
+            args = redirect_stdout(args, 0, j);
           }
           else{
-            args = redirect_stdout_overwrite(args);
+            args = redirect_stdout(args, 1, j);
           }
         }
         if(strchr(cmds[i], '|')){
