@@ -82,6 +82,9 @@ char ** redirect_stdout_append(char ** args){
 
 }
 
+/*redirect_stdin()
+  Arguments: None. Return: None.
+  This function redirects stdin from a file, titled "lines.txt"*/
 void redirect_stdin(){
   int x = open("lines.txt", O_RDONLY);
   int stdin = STDIN_FILENO;
@@ -89,6 +92,11 @@ void redirect_stdin(){
   dup2(stdin, x);
   printf("Testing the redirect_in DELETE WHEN WORKING");
 }
+
+/*currents()
+  Arguments: None. Return: char*(string)
+  This function uses the getcwd() command and puts it to a buffered string called currentdir.
+  The returned char* string is called currentdir.*/
 
 char* currents(){
   char currentdir[100];
@@ -102,6 +110,11 @@ char* currents(){
   return str;
 }
 
+/* char* changing_dirs(char * desires)
+  Arguments: char * desires -- this is the char* that is the desired directory we want to move to. like "cd ____"
+  Output: string that shows the current directory
+  Working: uses chdir to change the directory to the desired directory, checks for errors, and then uses
+  currents() in order to print the current directoryy*/
 char * changing_dirs(char * desires){
   currents();
   int x = chdir(desires);

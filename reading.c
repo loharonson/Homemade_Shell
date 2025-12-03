@@ -17,6 +17,11 @@ int err(){
 }
 */
 
+/* readingline()
+  The arguments are nothing. Return value: string (char*).
+  This function is meant to read through stdin in order to get the commands from the prompt.
+*/
+
 char* readingline(){
   char * returnable;
   char buffer[200];
