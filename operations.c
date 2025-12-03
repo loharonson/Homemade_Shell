@@ -20,63 +20,45 @@ void redirect_stdout(char ** args, int is_append, int len){
   //loop up to the redirector
   while(i < len){
     if(strchr(args[i], '>')){
+      before_args[i] = NULL;
       strcpy(destination, args[i + 1]);
       break;
     }
     before_args[i] = args[i];
     i++;
+  }
+  //if there's nothing after the redirect just execvp
   if(i == len - 1){
-    
-    exit(0);
-  }
-}
-
-char ** redirect_stdout_overwrite(char ** args, int len){
-  char * before_after[3];
-  before_after = redirect_general(args);
-  int stdout = STDOUT_FILENO;
-  int backup_stdout = dup(stdout);
-  if(p == -1)err();
-  int file = open(before_after[0], O_WRONLY | O_CREAT, 0644);
-  if(file == -1)err();
-  dup2(file, stdout);
-  int p = fork();
-  if(p == 0){
-    char ** new_args = {before, after, NULL};
-    execvp(new_args[0], new_args);
-  }
-  int status;
-  pid_t exit_child = wait(&status);
-  if(exit_child < 0)err();
-  if(WIFEXITED(status)){
-    //reset stdout just in case
-    fflush(stdout);
-    dup2(backup_stdout, stdout);
-  }
-  char ** new_args[len - ]
-}
-
-char ** redirect_stdout_append(char ** args){
-  char * before_after[3];
-  before_after = redirect_general(args);
-  int stdout = STDOUT_FILENO;
-  int backup_stdout = dup(stdout);
-  if(p == -1)err();
-  int file = open(before_after[0], O_WRONLY | O_APPEND | O_CREAT, 0644);
-  if(file == -1)err();
-  dup2(file, stdout);
-  int p = fork();
-  if(p == 0){
-    char ** new_args = {before, after, NULL};
-    execvp(new_args[0], new_args);
-  }
-  int status;
-  pid_t exit_child = wait(&status);
-  if(exit_child < 0)err();
-  if(WIFEXITED(status)){
-    //reset stdout just in case
-    fflush(stdout);
-    dup2(backup_stdout, stdout);
+    int stdout = STDOUT_FILENO;
+    int backup_stdout = dup(stdout);
+    if(is_append){
+      int file = open(destinaion, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    }
+    else{
+      int file = open(destinaion, O_WRONLY | O_CREAT, 0644);
+    }
+    if(file == -1){
+      printf("%s\n", strerror(errno));
+    }
+    dup2(file, stdout);
+    int p = fork();
+    if(p == -1){
+      printf("%s\n", strerror(errno));
+    }
+    if(p == 0){
+      execvp(before_args[0], before_args);
+    }
+    int status;
+    pid_t exit_child = wait(&status);
+    if(exit_child == -1){
+      printf("%s\n", strerror(errno));
+    }
+    if(WIFEXITED(status)){
+      //reset stdout just in case
+      fllush(stdout);
+      dup2(backup_stdout, stdout);
+      exit(0);
+    }
   }
 
 }
