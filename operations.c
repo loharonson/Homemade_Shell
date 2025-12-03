@@ -8,12 +8,15 @@
 
 #define BUFFER_SIZE 128
 
+//err function, no args, exits, makes errors readable
 int err(){
   printf("errno %d\n", errno);
   printf("%s\n", strerror(errno));
   exit(1);
 }
 
+//takes an args array, int to serve as a boolean for if >> or >, int len for when looping through
+//finds the redirector, runs execvp itself
 void redirect_stdout(char ** args, int is_append, int len){
   char * before_args[len];
   int i = 0;
@@ -28,8 +31,6 @@ void redirect_stdout(char ** args, int is_append, int len){
     before_args[i] = args[i];
     i++;
   }
-  //if there's nothing after the redirect just execvp
-  if(i == len - 1){
     int stdout = STDOUT_FILENO;
     int backup_stdout = dup(stdout);
     int file;
@@ -44,15 +45,13 @@ void redirect_stdout(char ** args, int is_append, int len){
     }
     dup2(file, stdout);
     execvp(before_args[0], before_args);
-    }
-
 }
 
 /*redirect_stdin()
   Arguments: None. Return: None.
   This function redirects stdin from a file, titled "lines.txt"
   */
-void redirect_stdin(){
+void redirect_stdin(char ** args){
   int x = open("lines.txt", O_RDONLY);
   if(x <0){
     err();

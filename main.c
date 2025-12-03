@@ -68,6 +68,7 @@ int main(int argc, char * argv[]){
         if(strchr(cmds[i],'<')){
           specials++;
           redirect_stdin(args);
+          
         }
         if(!specials){
           execvp(args[0], args);
