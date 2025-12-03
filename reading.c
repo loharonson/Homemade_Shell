@@ -20,14 +20,7 @@ int err(){
 char* readingline(){
   char * returnable;
   char buffer[200];
-  int i = 0;
-  while(fgets(buffer, 200, stdin)){
-    returnable = buffer;
-    returnable++;
-    i++;
-  }
-  if(i == 0){
-    return NULL;
-  }
+  fgets(buffer, 200, stdin)
+  strcpy(returnable, buffer);
   return returnable;
 }
