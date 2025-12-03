@@ -23,9 +23,14 @@ int err(){
 */
 
 char* readingline(){
-  char * returnable;
   char buffer[200];
-  fgets(buffer, 200, stdin)
+  if(fgets(buffer, 200, stdin) == NULL){
+    return NULL;
+  }
+  char * returnable = malloc(201);
+  if(returnable == NULL){
+    return nULL;
+  }
   strcpy(returnable, buffer);
   return returnable;
 }
