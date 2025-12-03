@@ -53,7 +53,7 @@ void redirect_stdout(char ** args, int is_append, int len){
   This function redirects stdin from a file, titled "lines.txt"
   */
 void redirect_stdin(char ** name){
-  int x = open(name, O_RDONLY);
+  int x = open(*name, O_RDONLY);
   if(x <0){
     err();
   }
