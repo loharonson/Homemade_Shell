@@ -49,11 +49,11 @@ void redirect_stdout(char ** args, int is_append, int len){
 }
 
 /*redirect_stdin()
-  Arguments: None. Return: None.
+  Arguments: char ** name-- the name of the file we are reading from. Return: None.
   This function redirects stdin from a file, titled "lines.txt"
   */
-void redirect_stdin(){
-  int x = open("lines.txt", O_RDONLY);
+void redirect_stdin(char ** name){
+  int x = open(name, O_RDONLY);
   if(x <0){
     err();
   }
