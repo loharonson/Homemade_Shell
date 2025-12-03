@@ -29,7 +29,7 @@ char* readingline(){
   }
   char * returnable = malloc(201);
   if(returnable == NULL){
-    return nULL;
+    return NULL;
   }
   strcpy(returnable, buffer);
   return returnable;
