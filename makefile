@@ -1,8 +1,8 @@
 .PHONY: clean run compile
-run: turtling
-	@./turtling
-compile turtling: main.o parse.o reading.o operations.o
-	@gcc -o turtling main.o parse.o reading.o operations.o
+run: shell
+	@./shell
+compile shell: main.o parse.o reading.o operations.o
+	@gcc -o shell main.o parse.o reading.o operations.o
 main.o: main.h main.c
 	@gcc -c main.c
 parse.o: parse.c parse.h
@@ -12,4 +12,4 @@ reading.o: reading.c reading.h
 operations.o: operations.c operations.h
 	@gcc -c operations.c
 clean:
-	rm -f *.o turtling
+	rm -f *.o shell
