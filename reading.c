@@ -19,13 +19,17 @@ int err(){
 
 /* char* readingline()
   The arguments are nothing. Return value: string (char*).
-  This function is meant to read through stdin in order to get the commands from the prompt.
+  This function is meant to read through stdin in order to get the commands from the prompt. Strips newlines.
 */
 
 char* readingline(){
   char buffer[200];
   if(fgets(buffer, 200, stdin) == NULL){
     return NULL;
+  }
+  int len = strlen(buffer);
+  if(len > 0 && buffer[len - 1] == '\n'){
+    buffer[len - 1]= '\0';
   }
   char * returnable = malloc(201);
   if(returnable == NULL){

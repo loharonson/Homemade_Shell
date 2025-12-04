@@ -30,7 +30,7 @@ int main(int argc, char * argv[]){
       }
       fflush(stdout);
       char prompt[1000];
-      scanf("%s", prompt);
+      //scanf("%s", prompt);
     }
     //read, then parse, then execvp
     char * line = readingline();
@@ -47,8 +47,12 @@ int main(int argc, char * argv[]){
       if(p == -1)err();
       if(p == 0){
         if(!strcmp(args[0], "cd")){
-          changing_dirs(args[1]);
-          exit(0);
+          char * new_dir = changing_dirs(args[1]);
+          if(new_dir){
+            printf("%s\n", new_dir);
+            free(new_dir);
+          }
+          //exit(0);
         }
         int specials = 0;
         //check for special symbols
