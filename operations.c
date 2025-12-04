@@ -8,13 +8,6 @@
 
 #define BUFFER_SIZE 128
 
-//err function, no args, exits, makes errors readable
-int err(){
-  printf("errno %d\n", errno);
-  printf("%s\n", strerror(errno));
-  exit(1);
-}
-
 //takes an args array, int to serve as a boolean for if >> or >, int len for when looping through
 //finds the redirector, runs execvp itself
 void redirect_stdout(char ** args, int is_append, int len){

@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <errno.h>
-
+#include <limits.h>
 
 int err(){
   printf("errno %d\n", errno);
@@ -29,7 +29,7 @@ int main(int argc, char * argv[]){
   	   printf("%s$ ", cwd);
       }
       fflush(stdout);
-      char prompt[ARG_MAX];
+      char prompt[1000];
       scanf("%s", prompt);
     }
     //read, then parse, then execvp
