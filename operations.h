@@ -4,6 +4,6 @@
   void redirect_stdout(char ** args, int is_append, int len);
   void redirect_stdin(char ** name);
   char* currents();
-  char * changing_dirs(char ** desires);
+  char * changing_dirs(char * desires);
   void pipe_func(char **args);
 #endif
