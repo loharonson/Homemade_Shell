@@ -9,12 +9,6 @@
 
 #define BUFFER_SIZE 128
 
-int err(){
-  printf("errno %d\n", errno);
-  printf("%s\n", strerror(errno));
-  exit(1);
-}
-
 //takes an args array, int to serve as a boolean for if >> or >, int len for when looping through
 //finds the redirector, runs execvp itself
 //void, returns nothing
@@ -56,7 +50,7 @@ void redirect_stdin(char ** args, int len){
   char * source = malloc(BUFFER_SIZE);
   strcpy(source, args[0]);
   int i = 2;
-  int x = open(*name, O_RDONLY);
+  int x = open(source, O_RDONLY);
   if(x <0){
     printf("%s\n", strerror(errno));
   }
@@ -65,7 +59,7 @@ void redirect_stdin(char ** args, int len){
   //make the after_redirect, then do special stuff if necessary
   int specials = 0;
   int first_index;
-  for(int j = 0; int j < len - 2; j++){
+  for(int j = 0; j < len - 2; j++){
     after_redirect[j] = args[i];
     if(!specials){
       if(strchr(args[i], '|')){

@@ -55,11 +55,11 @@ int main(int argc, char * argv[]){
         //check for special symbols
         if(strchr(cmds[i],'<')){
           specials++;
-          redirect_stdin(args);
+          redirect_stdin(args, j);
         }
         if(strchr(cmds[i], '|')){
           specials++;
-          pipe_func(args);
+          pipe_func(args, j);
         }
         if(strchr(cmds[i], '>')){
           specials++;
