@@ -32,15 +32,8 @@ int main(int argc, char * argv[]){
     }
     //read, then parse, then execvp
     char * line = readingline();
-    if(!line){
-      printf("Goodbye!\n");
-      exit(0);
-    }
-    printf("line: %s\n", line);
     char * cmds[20];
     int cmds_amt = parse_args(line, cmds, ";");
-    printf("%d\n", cmds_amt);
-    printf("%s\n", cmds[0]);
     for(int i = 0; i < cmds_amt; i++){
       char * args[20];
       int j = parse_args(cmds[i], args, " ");
@@ -69,7 +62,6 @@ int main(int argc, char * argv[]){
         if(strchr(cmds[i],'<')){
           specials++;
           redirect_stdin(args);
-
         }
         execvp(args[0], args);
         exit(0);

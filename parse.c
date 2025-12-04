@@ -5,6 +5,8 @@
 
 #define BUFFER_SIZE 128
 
+//arguments: line to parse, array of args to put separated args in, delimiter to indicate what to split on
+//return value: length of arg_ary to assist with looping in main
 int parse_args( char * line, char ** arg_ary, char * delimiter){
   char * curr = line;
   char * token;

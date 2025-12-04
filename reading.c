@@ -18,5 +18,11 @@
 char* readingline(){
   char *buffer = malloc(200);
   buffer = fgets(buffer, 200, stdin);
+  if(buffer == NULL){
+    printf("\nGoodbye!\n");
+    exit(0);
+  }
+  //strip newline if necessary
+  buffer[strcspn(buffer, "\n")] = '\0';
   return buffer;
 }
