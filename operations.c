@@ -46,7 +46,7 @@ void redirect_stdout(char ** args, int is_append, int len){
   This function redirects stdin from a file, titled "lines.txt"
   */
 void redirect_stdin(char ** args, int len){
-  char * after_redirect[len - 2];
+  char * after_redirect[len - 1];
   char * source = malloc(BUFFER_SIZE);
   strcpy(source, args[0]);
   int i = 2;
@@ -73,6 +73,7 @@ void redirect_stdin(char ** args, int len){
     }
     i++;
   }
+  after_redirect[i - 2] = NULL;
   if(specials){
     if(strchr(args[first_index], '|')){
       pipe_func(after_redirect, len);
