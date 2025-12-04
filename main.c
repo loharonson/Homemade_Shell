@@ -63,7 +63,7 @@ int main(int argc, char * argv[]){
         }
         if(strchr(cmds[i], '|')){
           specials++;
-          pipe_func(args, j);
+          pipe_func(args);
         }
         if(strchr(cmds[i], '>')){
           specials++;
