@@ -12,7 +12,7 @@
 
 /* char* readingline()
   The arguments are nothing. Return value: string (char*).
-  This function is meant to read through stdin in order to get the commands from the prompt.
+  This function is meant to read through stdin in order to get the commands from the prompt. Strips newlines.
 */
 
 char* readingline(){

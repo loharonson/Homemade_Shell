@@ -101,7 +101,7 @@ void redirect_stdin(char ** args, int len){
 char* currents(){
   char currentdir[100];
   getcwd(currentdir, sizeof(currentdir));
-  printf("Current Directory: %s\n", currentdir);
+  //printf("Current Directory: %s\n", currentdir);
   char *str = (char*) malloc(101);
   if(str == NULL){
     return NULL;
@@ -117,13 +117,21 @@ char* currents(){
   currents() in order to print the current directory
 */
 char * changing_dirs(char * desires){
-  currents();
+  if (!desires) {
+    desires = "/";
+  }
+  if (chdir(desires) == -1) {
+    printf("cd: %s: %s\n", desires, strerror(errno));
+    return NULL;
+  }
   int x = chdir(desires);
+  /*
   if(x == -1){
     printf("%s\n", strerror(errno));
     return currents();
   }
-  printf("Successfully changed the directory");
+  */
+  //printf("Successfully changed the directory");
   return currents();
 }
 
