@@ -10,15 +10,16 @@ Parts:
 * reading the code from the stdin prompts
 * parsing (include semicolons)
 * forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well
-* both < > redirection
+* <, >, and >> redirection
 * pipes
+* cd
 
 ## Function Headers and File Names
 In main.c:
 * err()
 * int main(int argc, char * argv)
 
-In operations.c: 
+In operations.c:
 * int err()
 * void redirect_stdout(char ** args, int is_append, int len)
 * void redirect_stdin(char ** name)
@@ -29,7 +30,5 @@ In operations.c:
 In parse.c:
 * int parse_args( char * line, char ** arg_ary, char * delimiter)
 
-In reading.c: 
+In reading.c:
 * char* readingline()
-
-

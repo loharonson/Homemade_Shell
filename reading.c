@@ -9,13 +9,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include "main.h"
-/*
-int err(){
-    printf("errno %d\n",errno);
-    printf("%s\n",strerror(errno));
-    exit(1);
-}
-*/
 
 /* char* readingline()
   The arguments are nothing. Return value: string (char*).
@@ -23,14 +16,7 @@ int err(){
 */
 
 char* readingline(){
-  char buffer[200];
-  if(fgets(buffer, 200, stdin) == NULL){
-    return NULL;
-  }
-  char * returnable = malloc(201);
-  if(returnable == NULL){
-    return NULL;
-  }
-  strcpy(returnable, buffer);
-  return returnable;
+  char *buffer = malloc(200);
+  buffer = fgets(buffer, 200, stdin);
+  return buffer;
 }

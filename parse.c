@@ -14,5 +14,5 @@ int parse_args( char * line, char ** arg_ary, char * delimiter){
     i++;
   }
   arg_ary[i] = NULL;
-  return ++i;
+  return i;
 }
