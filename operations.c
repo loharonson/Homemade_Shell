@@ -9,8 +9,15 @@
 
 #define BUFFER_SIZE 128
 
+int err(){
+  printf("errno %d\n", errno);
+  printf("%s\n", strerror(errno));
+  exit(1);
+}
+
 //takes an args array, int to serve as a boolean for if >> or >, int len for when looping through
 //finds the redirector, runs execvp itself
+//void, returns nothing
 void redirect_stdout(char ** args, int is_append, int len){
   char * before_args[len];
   int i = 0;
@@ -41,17 +48,54 @@ void redirect_stdout(char ** args, int is_append, int len){
 }
 
 /*redirect_stdin()
-  Arguments: char ** name-- the name of the file we are reading from. Return: None.
+  Arguments: char ** name-- the name of the file we are reading from and int len, the length of the arg array. Return: None.
   This function redirects stdin from a file, titled "lines.txt"
   */
-void redirect_stdin(char ** name){
+void redirect_stdin(char ** args, int len){
+  char * after_redirect[len - 2];
+  char * source = malloc(BUFFER_SIZE);
+  strcpy(source, args[0]);
+  int i = 2;
   int x = open(*name, O_RDONLY);
   if(x <0){
-    err();
+    printf("%s\n", strerror(errno));
   }
   dup2(x, STDIN_FILENO);
   close(x);
-  printf("Testing the redirect_in DELETE WHEN WORKING");
+  //make the after_redirect, then do special stuff if necessary
+  int specials = 0;
+  int first_index;
+  for(int j = 0; int j < len - 2; j++){
+    after_redirect[j] = args[i];
+    if(!specials){
+      if(strchr(args[i], '|')){
+        specials = 1;
+        first_index = i;
+      }
+      if(strchr(args[i], '>')){
+        specials = 1;
+        first_index = i;
+      }
+    }
+    i++;
+  }
+  if(specials){
+    if(strchr(args[first_index], '|')){
+      pipe_func(after_redirect, len);
+    }
+    else{
+      if(strstr(args[first_index], ">>")){
+        redirect_stdout(after_redirect, 1, len);
+      }
+      else{
+        redirect_stdout(after_redirect, 0, len);
+      }
+    }
+  }
+  else{
+    execvp(after_redirect[0], after_redirect);
+    err();
+  }
 }
 
 /*currents()
@@ -89,7 +133,8 @@ char * changing_dirs(char * desires){
   return currents();
 }
 
-void pipe_func(char **args){
+//takes args array and array length, no return value, finds the pipe and then redirects
+void pipe_func(char **args, int len){
     char *left = strsep(args, "|");
     FILE *outputs = popen(left, "r");
     if (outputs == NULL) err();

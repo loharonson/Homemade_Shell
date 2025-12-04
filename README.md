@@ -3,16 +3,17 @@
 Louis Oh-Aronson, Amrit Das, and Solomon Binyaminov
 
 Oh, Das! (ich) Bin.
-## Parts
-Our shell contains multiple parts that, hopefully, come together to produce a nice, working shell.
-Parts:
-* prompting (include shell path, and flush)
-* reading the code from the stdin prompts
-* parsing (include semicolons)
-* forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well
+## Features
+Our shell contains many parts that, hopefully, come together to produce a nice, working shell.
+Features:
+* prompting (include shell path, and flush) - working
+* reading the code from the stdin prompts - working
+* parsing (include semicolons) - working
+* forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well - working
 * <, >, and >> redirection
 * pipes
-* cd
+* chaining redirects/pipes/both
+* cd - attempted, didn't finish implementing- broken
 
 ## Function Headers and File Names
 In main.c:
