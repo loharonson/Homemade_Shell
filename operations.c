@@ -36,6 +36,7 @@ void redirect_stdout(char ** args, int is_append, int len){
   }
   if(file == -1){
     printf("%s\n", strerror(errno));
+    exit(1);
   }
   dup2(file, stdout);
   execvp(before_args[0], before_args);
