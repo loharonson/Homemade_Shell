@@ -11,8 +11,8 @@ Features:
 * parsing (include semicolons) - working
 * forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well - working
 * <, >, and >> redirection - working
-* pipes
-* chaining redirects/pipes/both
+* pipes - broken
+* chaining redirects/pipes/both - partially working (pipes are dysfunctional so chains with them all break, but if you chain < and > it'll work)
 * cd - attempted, didn't finish implementing- broken
 
 ## Function Headers and File Names
