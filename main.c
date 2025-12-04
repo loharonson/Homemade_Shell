@@ -10,6 +10,8 @@
 #include <errno.h>
 #include <limits.h>
 
+#define BUFFER_SIZE 128
+
 int err(){
   printf("errno %d\n", errno);
   printf("%s\n", strerror(errno));
@@ -36,34 +38,41 @@ int main(int argc, char * argv[]){
     int cmds_amt = parse_args(line, cmds, ";");
     for(int i = 0; i < cmds_amt; i++){
       char * args[20];
-      int j = parse_args(cmds[i], args, " ");
+      char * parse_cmd = malloc(BUFFER_SIZE);
+      strcpy(parse_cmd, cmds[i]);
+      int j = parse_args(parse_cmd, args, " ");
       int p = fork();
       if(p == -1)err();
       if(p == 0){
+        if(j == 0){
+          exit(0);
+        }
         if(!strcmp(args[0], "cd")){
           changing_dirs(args[1]);
           exit(0);
         }
         int specials = 0;
         //check for special symbols
-        if(strchr(cmds[i], '>')){
+        if(strchr(cmds[i],'<')){
           specials++;
-          if(strstr(cmds[i], ">>")){
-            redirect_stdout(args, 0, j);
-          }
-          else{
-            redirect_stdout(args, 1, j);
-          }
+          redirect_stdin(args);
         }
         if(strchr(cmds[i], '|')){
           specials++;
           pipe_func(args);
         }
-        if(strchr(cmds[i],'<')){
+        if(strchr(cmds[i], '>')){
           specials++;
-          redirect_stdin(args);
+          if(strstr(cmds[i], ">>")){
+            redirect_stdout(args, 1, j);
+          }
+          else{
+            redirect_stdout(args, 0, j);
+          }
         }
-        execvp(args[0], args);
+        if(specials == 0){
+          execvp(args[0], args);
+        }
         exit(0);
       }
       int status;

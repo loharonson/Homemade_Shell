@@ -15,6 +15,7 @@ void redirect_stdout(char ** args, int is_append, int len){
   char * before_args[len];
   int i = 0;
   char * destination = malloc(BUFFER_SIZE);
+  int stdout = STDOUT_FILENO;
   //loop up to the redirector
   while(i < len){
     if(strchr(args[i], '>')){
@@ -25,20 +26,18 @@ void redirect_stdout(char ** args, int is_append, int len){
     before_args[i] = args[i];
     i++;
   }
-    int stdout = STDOUT_FILENO;
-    int backup_stdout = dup(stdout);
-    int file;
-    if(is_append){
-      file = open(destination, O_WRONLY | O_CREAT | O_APPEND, 0644);
-    }
-    else{
-      file = open(destination, O_WRONLY | O_CREAT, 0644);
-    }
-    if(file == -1){
-      printf("%s\n", strerror(errno));
-    }
-    dup2(file, stdout);
-    execvp(before_args[0], before_args);
+  int file;
+  if(is_append){
+    file = open(destination, O_WRONLY | O_CREAT | O_APPEND, 0644);
+  }
+  else{
+    file = open(destination, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+  }
+  if(file == -1){
+    printf("%s\n", strerror(errno));
+  }
+  dup2(file, stdout);
+  execvp(before_args[0], before_args);
 }
 
 /*redirect_stdin()
