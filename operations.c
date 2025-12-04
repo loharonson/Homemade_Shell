@@ -56,8 +56,7 @@ void redirect_stdin(char ** name){
   if(x <0){
     err();
   }
-  int stdin = STDIN_FILENO;
-  dup2(x, stdin);
+  dup2(x, STDIN_FILENO);
   close(x);
   printf("Testing the redirect_in DELETE WHEN WORKING");
 }
@@ -91,11 +90,33 @@ char * changing_dirs(char ** desires){
   int x = chdir(*desires);
   if(x == -1){
     printf("%s\n", strerror(errno));
+    return currents();
   }
   printf("Successfully changed the directory");
   return currents();
 }
 
 void pipe_func(char **args){
+  char *left = strsep(args, "|");
+  char *right = args;
+  FILE *outputs = popen(left, "r");
+  if (outputs == NULL) err();
+
+  int x = open("midst.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+  if (x < 0) err();
+
+  char buffer[200];
+  while (fgets(buffer, sizeof(buffer), outputs) != NULL) {
+    write(x, buffer, strlen(buffer));
+  }
+  pclose(outputs);
+  close(x);
   
+  pid_t pid = fork();
+  if (pid == 0){
+    int works = open("midst.txt", O_RDONLY);
+    if(works < 0) err();
+    dup2(works, STDIN_FILENO);
+    close(works);
+  }
 }
