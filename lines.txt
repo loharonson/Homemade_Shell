@@ -1,0 +1,10 @@
+mkdir test_dir
+cd test_dir
+touch file1.txt
+touch file2.txt
+ls -l
+mv file2.txt file2_renamed.txt
+cp file1.txt file1_copy.txt
+cat file1.txt
+chmod 644 file1.txt
+grep "hello" file1.txt
