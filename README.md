@@ -10,7 +10,7 @@ Features:
 * reading the code from the stdin prompts - working
 * parsing (include semicolons) - working
 * forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well - working
-* <, >, and >> redirection
+* <, >, and >> redirection - working
 * pipes
 * chaining redirects/pipes/both
 * cd - attempted, didn't finish implementing- broken
