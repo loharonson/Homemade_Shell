@@ -11,8 +11,8 @@ Features:
 * parsing (include semicolons) - working
 * forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well - working
 * <, >, and >> redirection - partially working (everything works, I misread how < works so the redirect_stdin we have expects file < cmd instead of cmd < file)
-* pipes - broken
-* chaining redirects/pipes/both - partially working (pipes are dysfunctional so chains with them all break, but if you chain < and > (or >>) it'll work)
+* pipes - working
+* chaining redirects/pipes/both -  working
 * cd - attempted, didn't finish implementing- broken
 
 ## Function Headers and File Names
