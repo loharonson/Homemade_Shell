@@ -76,7 +76,7 @@ void redirect_stdin(char ** args, int len){
   after_redirect[i - 2] = NULL;
   if(specials){
     if(strchr(args[first_index], '|')){
-      pipe_func(after_redirect, len);
+      pipe_func(after_redirect);
     }
     else{
       if(strstr(args[first_index], ">>")){
@@ -136,30 +136,33 @@ char * changing_dirs(char * desires){
   return currents();
 }
 
-//takes args array and array length, no return value, finds the pipe and then redirects
-void pipe_func(char **args, int len){
-    char *left = strsep(args, "|");
-    FILE *outputs = popen(left, "r");
-    if (outputs == NULL) err();
-    int tmp = open("midst.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-    if (tmp < 0) err();
-    char buffer[200];
-    while (fgets(buffer, sizeof(buffer), outputs) != NULL) {
-        write(tmp, buffer, strlen(buffer));
+//takes args array, no return value, finds the pipe and then redirects
+void pipe_func(char **args) {
+    int i = 0;
+    while (args[i] && strcmp(args[i], "|") != 0) i++;
+    if (!args[i]) return;
+    args[i] = NULL;
+    char **left  = args;
+    char **right = &args[i+1];
+    pid_t p1 = fork();
+    if (p1 == 0) {
+        int tmp = open("midst.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+        if (tmp < 0) err();
+        dup2(tmp, STDOUT_FILENO);
+        close(tmp);
+        execvp(left[0], left);
+        err();
     }
-    pclose(outputs);
-    close(tmp);
-    pid_t pid = fork();
-    if (pid == 0) {
+    waitpid(p1, NULL, 0);
+    pid_t p2 = fork();
+    if (p2 == 0) {
         int in = open("midst.txt", O_RDONLY);
         if (in < 0) err();
         dup2(in, STDIN_FILENO);
         close(in);
-
-        execvp(args[0], args);
+        execvp(right[0], right);
         err();
-    } else {
-        waitpid(pid, NULL, 0);
-        remove("midst.txt");
     }
+    waitpid(p2, NULL, 0);
+    remove("midst.txt");
 }

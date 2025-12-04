@@ -5,5 +5,5 @@
   void redirect_stdin(char ** args, int len);
   char* currents();
   char * changing_dirs(char * desires);
-  void pipe_func(char **args, int len);
+  void pipe_func(char **args);
 #endif
