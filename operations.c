@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
+#include "operations.h"
 
 #define BUFFER_SIZE 128
 
@@ -90,26 +91,28 @@ char * changing_dirs(char * desires){
 }
 
 void pipe_func(char **args){
-  char *left = strsep(args, "|");
-  char *right = args;
-  FILE *outputs = popen(left, "r");
-  if (outputs == NULL) err();
+    char *left = strsep(args, "|");
+    FILE *outputs = popen(left, "r");
+    if (outputs == NULL) err();
+    int tmp = open("midst.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    if (tmp < 0) err();
+    char buffer[200];
+    while (fgets(buffer, sizeof(buffer), outputs) != NULL) {
+        write(tmp, buffer, strlen(buffer));
+    }
+    pclose(outputs);
+    close(tmp);
+    pid_t pid = fork();
+    if (pid == 0) {
+        int in = open("midst.txt", O_RDONLY);
+        if (in < 0) err();
+        dup2(in, STDIN_FILENO);
+        close(in);
 
-  int x = open("midst.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-  if (x < 0) err();
-
-  char buffer[200];
-  while (fgets(buffer, sizeof(buffer), outputs) != NULL) {
-    write(x, buffer, strlen(buffer));
-  }
-  pclose(outputs);
-  close(x);
-  
-  pid_t pid = fork();
-  if (pid == 0){
-    int works = open("midst.txt", O_RDONLY);
-    if(works < 0) err();
-    dup2(works, STDIN_FILENO);
-    close(works);
-  }
+        execvp(args[0], args);
+        err();
+    } else {
+        waitpid(pid, NULL, 0);
+        remove("midst.txt");
+    }
 }
