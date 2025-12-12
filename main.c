@@ -40,6 +40,10 @@ int main(int argc, char * argv[]){
       char * args[20];
       char * parse_cmd = malloc(BUFFER_SIZE);
       strcpy(parse_cmd, cmds[i]);
+      if(!strcmp(cmds[i], "exit")){
+        printf("Goodbye!\n");
+        exit(0);
+      }
       int j = parse_args(parse_cmd, args, " ");
       int p = fork();
       if(p == -1)err();
