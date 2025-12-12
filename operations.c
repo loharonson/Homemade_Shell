@@ -137,7 +137,7 @@ char * changing_dirs(char * desires){
     printf("cd: %s: %s\n", desires, strerror(errno));
     return NULL;
   }
-  int x = chdir(desires);
+  ///int x = chdir(desires);
   /*
   if(x == -1){
     printf("%s\n", strerror(errno));
@@ -145,7 +145,8 @@ char * changing_dirs(char * desires){
   }
   */
   //printf("Successfully changed the directory");
-  return currents();
+  //return currents();
+  return NULL;
 }
 
 //takes args array, no return value, finds the pipe and then redirects
