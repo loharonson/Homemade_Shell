@@ -47,44 +47,55 @@ void redirect_stdout(char ** args, int is_append, int len){
   This function redirects stdin from a file, titled "lines.txt"
   */
 void redirect_stdin(char ** args, int len){
-  char * after_redirect[len - 1];
+  char * after_redirect[len];
   char * source = malloc(BUFFER_SIZE);
-  strcpy(source, args[0]);
-  int i = 2;
+  int i = -1;
+  int out = 0;
+  for(int j = 0; j < len; j++){
+    if(!strcmp(args[j],"<")){
+      i = j + 1;
+      break;
+    }
+    else{
+      after_redirect[out++] = args[j];
+    }
+  }
+  strcpy(source, args[i]);
   int x = open(source, O_RDONLY);
   if(x <0){
-    printf("%s\n", strerror(errno));
+    err();
   }
   dup2(x, STDIN_FILENO);
   close(x);
   //make the after_redirect, then do special stuff if necessary
   int specials = 0;
   int first_index;
-  for(int j = 0; j < len - 2; j++){
-    after_redirect[j] = args[i];
+
+  for(int j = i + 1; j < len && args[j]; j++){
+    after_redirect[out] = args[j];
     if(!specials){
-      if(strchr(args[i], '|')){
+      if(!strcmp(args[j], "|")){
         specials = 1;
-        first_index = i;
+        first_index = out;
       }
-      if(strchr(args[i], '>')){
+      if(strchr(args[j], '>')){
         specials = 1;
-        first_index = i;
+        first_index = out;
       }
     }
-    i++;
+    out++;
   }
-  after_redirect[i - 2] = NULL;
+  after_redirect[out] = NULL;
   if(specials){
-    if(strchr(args[first_index], '|')){
+    if(!strcmp(after_redirect[first_index], "|")){
       pipe_func(after_redirect);
     }
     else{
-      if(strstr(args[first_index], ">>")){
-        redirect_stdout(after_redirect, 1, len);
+      if(strstr(after_redirect[first_index], ">>")){
+        redirect_stdout(after_redirect, 1, out);
       }
       else{
-        redirect_stdout(after_redirect, 0, len);
+        redirect_stdout(after_redirect, 0, out);
       }
     }
   }

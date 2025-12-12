@@ -64,10 +64,12 @@ int main(int argc, char * argv[]){
         if(strchr(cmds[i],'<')){
           specials++;
           redirect_stdin(args, j);
+          exit(0);
         }
         if(strchr(cmds[i], '|')){
           specials++;
           pipe_func(args);
+          exit(0);
         }
         if(strchr(cmds[i], '>')){
           specials++;
@@ -77,6 +79,7 @@ int main(int argc, char * argv[]){
           else{
             redirect_stdout(args, 0, j);
           }
+          exit(0);
         }
         if(specials == 0){
           execvp(args[0], args);
