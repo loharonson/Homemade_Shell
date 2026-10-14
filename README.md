@@ -1,4 +1,4 @@
-# MyShell
+# Homemade Shell
 Louis Oh-Aronson, Amrit Das, and Solomon Binyaminov
 
 ## Features
