@@ -2,16 +2,14 @@
 Louis Oh-Aronson, Amrit Das, and Solomon Binyaminov
 
 ## Features
-Our shell contains many parts that, hopefully, come together to produce a nice, working shell.
+Our shell contains many parts that come together to produce a nice, working shell.
 Features:
 * prompting (include shell path, and flush) - working
 * reading the code from the stdin prompts - working
 * parsing (include semicolons) - working
 * forking --> execvp or internal shell commands, then wait until subprogram exits. exiting as well - working
-* <, >, and >> redirection - partially working (everything works, I misread how < works so the redirect_stdin we have expects file < cmd instead of cmd < file)
 * pipes - working
 * chaining redirects/pipes/both -  working
-* cd - attempted, didn't finish implementing- broken
 
 ## Function Headers and File Names
 In main.c:
@@ -31,3 +29,7 @@ In parse.c:
 
 In reading.c:
 * char* readingline()
+
+## Known Issues:
+* <, >, and >> redirection - works, but redirect_stdin expects file < cmd instead of cmd < file
+* cd is a work in progress and doesn't currently function as intended
